@@ -15,8 +15,8 @@
  */
 package org.springframework.samples.petclinic.model;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
+import jakarta.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
 
 /**
  * Simple JavaBean domain object adds a name property to <code>BaseEntity</code>. Used as
@@ -27,6 +27,8 @@ import javax.persistence.MappedSuperclass;
  */
 @MappedSuperclass
 public class NamedEntity extends BaseEntity {
+
+	private static final long serialVersionUID = -1827620691768236760L;
 
 	@Column(name = "name")
 	private String name;
