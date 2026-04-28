@@ -15,9 +15,9 @@
  */
 package org.springframework.samples.petclinic.model;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
-import javax.validation.constraints.NotEmpty;
+import jakarta.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.validation.constraints.NotBlank;
 
 /**
  * Simple JavaBean domain object representing an person.
@@ -27,12 +27,14 @@ import javax.validation.constraints.NotEmpty;
 @MappedSuperclass
 public class Person extends BaseEntity {
 
+	private static final long serialVersionUID = -5934070342233945557L;
+
 	@Column(name = "first_name")
-	@NotEmpty
+	@NotBlank
 	private String firstName;
 
 	@Column(name = "last_name")
-	@NotEmpty
+	@NotBlank
 	private String lastName;
 
 	public String getFirstName() {

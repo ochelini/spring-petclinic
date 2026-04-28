@@ -28,6 +28,7 @@ import java.util.Locale;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledInNativeImage;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -38,6 +39,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
  * @author Colin But
  */
 @ExtendWith(MockitoExtension.class)
+@DisabledInNativeImage
 class PetTypeFormatterTests {
 
 	@Mock
@@ -80,11 +82,15 @@ class PetTypeFormatterTests {
 	private List<PetType> makePetTypes() {
 		List<PetType> petTypes = new ArrayList<>();
 		petTypes.add(new PetType() {
+			private static final long serialVersionUID = 4182992965923515553L;
+
 			{
 				setName("Dog");
 			}
 		});
 		petTypes.add(new PetType() {
+			private static final long serialVersionUID = 1823182409934678856L;
+
 			{
 				setName("Bird");
 			}

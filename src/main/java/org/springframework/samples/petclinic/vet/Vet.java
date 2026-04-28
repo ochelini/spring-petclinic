@@ -21,17 +21,20 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlElement;
-
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 import org.springframework.samples.petclinic.model.Person;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 
 /**
  * Simple JavaBean domain object representing a veterinarian.
@@ -44,6 +47,8 @@ import org.springframework.samples.petclinic.model.Person;
 @Entity
 @Table(name = "vets")
 public class Vet extends Person {
+
+	private static final long serialVersionUID = 2216866745632621103L;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "vet_specialties", joinColumns = @JoinColumn(name = "vet_id"),
@@ -61,17 +66,20 @@ public class Vet extends Person {
 		this.specialties = specialties;
 	}
 
-	@XmlElement
+	@JsonProperty("specialties")
+	@JsonSerialize(as = ArrayList.class)
 	public List<Specialty> getSpecialties() {
 		List<Specialty> sortedSpecs = new ArrayList<>(getSpecialtiesInternal());
 		PropertyComparator.sort(sortedSpecs, new MutableSortDefinition("name", true, true));
 		return Collections.unmodifiableList(sortedSpecs);
 	}
 
+	@JsonIgnore
 	public int getNrOfSpecialties() {
 		return getSpecialtiesInternal().size();
 	}
 
+	@JsonIgnore
 	public void addSpecialty(Specialty specialty) {
 		getSpecialtiesInternal().add(specialty);
 	}
